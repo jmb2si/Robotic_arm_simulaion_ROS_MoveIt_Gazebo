@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: urdf_trex
+    relative_path: urdf/urdf_trex.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/urdf_trex.srdf
+  CONFIG:
+    author_name: Mohamed
+    author_email: mohamed.jaabiri@gmail.com
+    generated_timestamp: 1630772680

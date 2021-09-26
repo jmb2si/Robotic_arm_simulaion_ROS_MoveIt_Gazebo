@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- By default, the joint value is sent to the topic /joint_states. The data source is Joint State Interfaces. 
+  This interface will read the joint value of the robot from the encoder, and the joint_state_controller will control 
+  the rate of release. remap can change the topic name -->
+<!--   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <remap from="/joint_states" to="/urdf_trex/joint_states"/> -->
+    <!-- If there is no real robot or gazebo, you can add it in node -->
+    <!--  <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>-->
+<!--   </node> -->
+
+
+  <!-- Set to true, you can jump out of a GUI box, the joint angle motion range is read from URDF, 
+  drag the progress bar to change the joint value of the robot, and let the robot move. -->
+  <param name="use_gui" value="true"/>
+
+  <!--  If it is in the roslaunch file, it is globally effective. The above code can also be placed in the node, such as -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+     <param name="use_gui" value="true"/>
+  </node>
+
+  <!-- Read the data of /joint_states and publish it to /tf and /tf_static -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="urdf_path" default="$(find urdf_trex)/urdf/urdf_trex.urdf"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+
+  <!-- startup simulated world -->
+  <!-- We resume the logic in empty_world.launch -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" textfile="$(arg urdf_path)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model trex -x 0.5 -y 0.5 -z 0.5"
+    respawn="false" output="screen" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find trex_gazebo)/config/trex_gazebo_control.yaml" command="load"/>
+
+ <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/urdf_trex" args="joint_state_controller
+                      joint1_position_controller
+                      joint2_position_controller
+                      joint3_position_controller
+                      joint4_position_controller"/>
+
+
+
+<!--   <include file="$(find trex_gazebo)/launch/trex_gazebo_states.launch"/>
+ -->
+
+
+
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+<!--   <include file="$(find trex_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include> -->
+
+   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+<!--   <include file="$(find trex_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="true"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include> -->
+
+ <!-- Run Rviz and load the default config to see the state of the move_group node -->
+<!--   <include file="$(find trex_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include> -->
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+</launch>
