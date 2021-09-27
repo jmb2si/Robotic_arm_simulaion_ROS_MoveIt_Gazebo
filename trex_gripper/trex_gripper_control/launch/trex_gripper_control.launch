@@ -1,0 +1,24 @@
+<launch>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find trex_gripper_control)/config/trex_gripper_controller.yaml" command="load"/>
+
+  <!-- Generate a controller to control the robot in gazebo: load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/trex_gripper_urdf" args="joint_state_controller trex_arm_controller"/>
+
+  <!-- Run a robot state publisher to take the joint values and publish them to tf -->
+  <!-- convert joint states to TF transforms for rviz, etc -->
+
+<!--   The final line starts a state_publisher node that simply listens to /joint_states messages from the joint_state_controller 
+then publishes the transforms to /tf. This allows you to see your simulated robot in Rviz as well as do other tasks. -->  
+
+
+  <!-- Convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+      respawn="false" output="screen">
+      <remap from="/joint_states" to="/trex_gripper_urdf/joint_states" />
+  </node>
+
+</launch>
+
+
