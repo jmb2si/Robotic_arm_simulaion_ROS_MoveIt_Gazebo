@@ -1,0 +1,32 @@
+<launch>
+
+  <!-- The planning and execution components of MoveIt! configured to 
+   publish the current configuration of the robot (simulated or real) 
+   and the current state of the world as seen by the planner -->
+  <include file="$(find trex_moveit_config)/launch/move_group.launch">
+    <arg name="publish_monitored_planning_scene" value="true" />
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="info" value="true"/>
+  </include>
+
+  <!-- Load the SRDF and other configuration files -->
+  <include file="$(find trex_moveit_config)/launch/planning_context.launch"/>
+
+
+
+  <!-- Generate/Load robot description file -->
+  <include file="$(find trex_control)/launch/trex_control.launch"/>
+
+  <!-- The visualization component of MoveIt! -->
+  <include file="$(find trex_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <!-- <arg name="debug" value="false"/> -->
+  </include>
+
+  <!-- Joint state publisher publishes revolute joint static transforms to /tf -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <rosparam param="source_list">["urdf_trex/joint_states"]</rosparam>
+  </node> 
+  <!-- joint_state_publisher_gui -->
+
+</launch>

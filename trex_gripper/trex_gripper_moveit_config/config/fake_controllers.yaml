@@ -1,0 +1,12 @@
+controller_list:
+  - name: fake_trex_arm_controller
+    type: $(arg execution_type)
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+initial:  # Define initial robot poses.
+  - group: trex_arm
+    pose: home_position

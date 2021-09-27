@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: trex_gripper_urdf
+    relative_path: urdf/trex_gripper_urdf.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/trex_gripper_urdf.srdf
+  CONFIG:
+    author_name: mohamed
+    author_email: mohamed.jaabiri@gmail.com
+    generated_timestamp: 1632599375

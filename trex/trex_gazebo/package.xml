@@ -1,0 +1,48 @@
+<package>
+
+  <name>trex_gazebo</name>
+  <version>0.3.0</version>
+  <description>
+     An automatically generated package with all the configuration and launch files for using the urdf_trex with the MoveIt Motion Planning Framework
+  </description>
+  <author email="mohamed.jaabiri@gmail.com">Mohamed</author>
+  <maintainer email="mohame.jaabiri@gmail.com">Mohamed</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://moveit.ros.org/</url>
+  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
+  <url type="repository">https://github.com/ros-planning/moveit</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roslaunch</build_depend>
+  <build_depend>effort_controllers</build_depend>
+  <build_depend>controller_interface</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>realtime_tools</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>gazebo_ros_control</build_depend>
+
+  <run_depend>message_runtime</run_depend>
+  <run_depend>effort_controllers</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>realtime_tools</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>controller_interface</run_depend>
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>gazebo_plugins</run_depend>
+
+  <export>
+      <gazebo_ros 
+          gazebo_plugin_path="${prefix}/devel/lib" 
+          ld_library_path="${prefix}/devel/lib"/>
+  </export>
+
+</package>
+
