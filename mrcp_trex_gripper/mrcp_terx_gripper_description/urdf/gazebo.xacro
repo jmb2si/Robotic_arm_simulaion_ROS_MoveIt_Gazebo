@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot name="roverv1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<gazebo reference="Wheel1">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+<gazebo reference="Wheel2">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+<gazebo reference="Wheel3">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+<gazebo reference="Wheel4">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+<gazebo reference="Wheel5">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+<gazebo reference="Wheel6">
+      <mu1 value="1"/> <!-- Columb friction coefficient in fdir1 direction -->
+      <mu2 value="1"/> <!-- Columb friction in perpendicular direction to fdir1 -->
+      <kp value="20000" /> <!-- contact stiffness -->
+      <kd value="1.0" /> <!-- contact damping -->
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</robot>

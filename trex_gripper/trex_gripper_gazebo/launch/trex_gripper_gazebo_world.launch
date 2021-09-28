@@ -34,6 +34,7 @@
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model trex_gripper -x 0 -y 0 -z 0"
     respawn="false" output="screen" />
 
+
   <!--  .............................   tf   ......................................... -->
   <!-- tf is a package that lets the user keep track of multiple coordinate frames over time. 
   tf maintains the relationship between coordinate frames in a tree structure buffered in time, 

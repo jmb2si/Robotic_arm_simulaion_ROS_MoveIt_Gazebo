@@ -1,14 +1,23 @@
 cmake_minimum_required(VERSION 2.8.3)
-
 project(urdf_trex)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  gazebo_ros
+)
 
-catkin_package()
+# Depend on system install of Gazebo
+find_package(gazebo REQUIRED)
 
-find_package(roslaunch)
+include_directories(include ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS} ${SDFormat_INCLUDE_DIRS})
 
-foreach(dir config launch meshes urdf)
-	install(DIRECTORY ${dir}/
-		DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
-endforeach(dir)
+catkin_package(
+	DEPENDS
+	gazebo_ros
+	CATKIN_DEPENDS
+	INCLUDE_DIRS
+	LIBRARIES ${PROJECT_NAME}
+) 
+
+# INSTALL #
+install(DIRECTORY launch meshes urdf
+DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

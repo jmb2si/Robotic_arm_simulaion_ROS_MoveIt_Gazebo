@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<robot name="roverv1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/roverv1</robotNamespace>
+  </plugin>
+
+</gazebo>
+<!--plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+  <alwaysOn>true</alwaysOn>
+  <updateRate>30.0</updateRate>
+  <bodyName>base</bodyName>
+  <topicName>odom</topicName>
+  <gaussianNoise>0.01</gaussianNoise>
+  <frameName>world</frameName>
+  <xyzOffsets>0 0 0</xyzOffsets>
+  <rpyOffsets>0 0 0</rpyOffsets-->
+
+   
+
+
+
+  <xacro:include filename="$(find roverv1)/urdf/model.urdf" />
+  <xacro:include filename="$(find roverv1)/urdf/transmission.xacro" />
+  <xacro:include filename="$(find roverv1)/urdf/gazebo.xacro" /> 
+
+
+
+
+
+</robot>

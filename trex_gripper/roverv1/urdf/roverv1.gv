@@ -1,0 +1,50 @@
+digraph G {
+node [shape=box];
+"body_footprint" [label="body_footprint"];
+"body" [label="body"];
+"Left_Rocker" [label="Left_Rocker"];
+"Left_Bogie" [label="Left_Bogie"];
+"Wheel3" [label="Wheel3"];
+"Servo3" [label="Servo3"];
+"Wheel5" [label="Wheel5"];
+"Servo1" [label="Servo1"];
+"Wheel1" [label="Wheel1"];
+"Right_Rocker" [label="Right_Rocker"];
+"Right_Bogie" [label="Right_Bogie"];
+"Wheel4" [label="Wheel4"];
+"Servo4" [label="Servo4"];
+"Wheel6" [label="Wheel6"];
+"Servo2" [label="Servo2"];
+"Wheel2" [label="Wheel2"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"body_footprint" -> "fixed" [label="xyz: 0 0 0.3 \nrpy: 0 -0 0"]
+"fixed" -> "body"
+"body" -> "Left_Rocker_joint" [label="xyz: 0 -0.136 0.03 \nrpy: 0 -0 0"]
+"Left_Rocker_joint" -> "Left_Rocker"
+"Left_Rocker" -> "Left_Bogie_joint" [label="xyz: 0.2 -0.054 -0.06 \nrpy: 0 -0 0"]
+"Left_Bogie_joint" -> "Left_Bogie"
+"Left_Bogie" -> "Motor3_joint" [label="xyz: -0.2 -0.13 -0.11 \nrpy: 0 -0 3.14159"]
+"Motor3_joint" -> "Wheel3"
+"Left_Bogie" -> "Servo3_joint" [label="xyz: 0.2 -0.165 0.03 \nrpy: 0 -0 3.14159"]
+"Servo3_joint" -> "Servo3"
+"Servo3" -> "Motor5_joint" [label="xyz: 0 -0.03 -0.142 \nrpy: 0 -0 0"]
+"Motor5_joint" -> "Wheel5"
+"Left_Rocker" -> "Servo1_joint" [label="xyz: -0.4 -0.214 -0.04 \nrpy: 0 -0 3.14159"]
+"Servo1_joint" -> "Servo1"
+"Servo1" -> "Motor1_joint" [label="xyz: 0 -0.035 -0.14 \nrpy: 0 -0 0"]
+"Motor1_joint" -> "Wheel1"
+"body" -> "Right_Rocker_joint" [label="xyz: 0 0.136 0.03 \nrpy: 0 -0 0"]
+"Right_Rocker_joint" -> "Right_Rocker"
+"Right_Rocker" -> "Right_Bogie_joint" [label="xyz: 0.2 0.054 -0.06 \nrpy: 0 -0 0"]
+"Right_Bogie_joint" -> "Right_Bogie"
+"Right_Bogie" -> "Motor4_joint" [label="xyz: -0.2 0.13 -0.11 \nrpy: 0 -0 0"]
+"Motor4_joint" -> "Wheel4"
+"Right_Bogie" -> "Servo4_joint" [label="xyz: 0.2 0.165 0.03 \nrpy: 0 -0 0"]
+"Servo4_joint" -> "Servo4"
+"Servo4" -> "Motor6_joint" [label="xyz: 0 -0.03 -0.142 \nrpy: 0 -0 0"]
+"Motor6_joint" -> "Wheel6"
+"Right_Rocker" -> "Servo2_joint" [label="xyz: -0.4 0.214 -0.04 \nrpy: 0 -0 0"]
+"Servo2_joint" -> "Servo2"
+"Servo2" -> "Motor2_joint" [label="xyz: 0 -0.035 -0.14 \nrpy: 0 -0 0"]
+"Motor2_joint" -> "Wheel2"
+}

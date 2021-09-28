@@ -18,6 +18,7 @@
   <arg name="paused" default="false"/>
   <arg name="gui" default="true"/>
   <arg name="urdf_path" default="$(find trex_gripper_urdf)/urdf/trex_gripper_urdf.urdf"/>
+  <arg name="urdf_path_2" default="$(find roverv1)/urdf/modell.urdf"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
@@ -33,11 +34,19 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <!-- send robot urdf to param server -->
+  <!-- send TREX robot arm urdf to param server -->
   <param name="robot_description" textfile="$(arg urdf_path)" />
+    <!-- send MRCP robot urdf to param server -->
+  <param name="robot_description_2" textfile="$(arg urdf_path_2)" />
+
+
 
   <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
-  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model trex_gripper_urdf -x 0.0 -y 0.0 -z 0.0"
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description_2 -model MRCP -x 0.0 -y 0.0 -z 0.0"
+    respawn="false" output="screen" />  
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model trex_gripper_urdf -x 0.0 -y 0.0 -z 0.5"
     respawn="false" output="screen" />
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
@@ -47,5 +56,8 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/trex_gripper_urdf" args="joint_state_controller joint1_position_controller joint2_position_controller
                                                   joint3_position_controller joint4_position_controller joint5_position_controller"/>
+
+
+                                           
 
 </launch>

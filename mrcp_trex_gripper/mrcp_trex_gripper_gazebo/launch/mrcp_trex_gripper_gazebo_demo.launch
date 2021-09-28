@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Set to true, you can jump out of a GUI box, the joint angle motion range is read from URDF, 
+  drag the progress bar to change the joint value of the robot, and let the robot move. -->
+  <param name="use_gui" value="true"/>
+
+  <!--  If it is in the roslaunch file, it is globally effective. The above code can also be placed in the node, such as -->
+ <!--  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+     <param name="use_gui" value="true"/>
+  </node> -->
+
+  <!-- Read the data of /joint_states and publish it to /tf and /tf_static -->
+<!--   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+ -->
+
+
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="urdf_path" default="$(find trex_gripper_urdf)/urdf/trex_gripper_urdf.urdf"/>
+  <arg name="urdf_path_2" default="$(find roverv1)/urdf/modell.urdf"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+
+  <!-- startup simulated world -->
+  <!-- We resume the logic in empty_world.launch -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- send TREX robot arm urdf to param server -->
+  <param name="robot_description" textfile="$(arg urdf_path)" />
+    <!-- send MRCP robot urdf to param server -->
+  <param name="robot_description_2" textfile="$(arg urdf_path_2)" />
+
+
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description_2 -model MRCP -x 0.0 -y 0.0 -z 0.0"
+    respawn="false" output="screen" />  
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model trex_gripper_urdf -x 0.0 -y 0.0 -z 0.5"
+    respawn="false" output="screen" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find trex_gripper_gazebo)/config/trex_gripper_gazebo_control.yaml" command="load"/>
+
+ <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/trex_gripper_urdf" args="joint_state_controller joint1_position_controller joint2_position_controller
+                                                  joint3_position_controller joint4_position_controller joint5_position_controller"/>
+
+
+                                           
+
+</launch>

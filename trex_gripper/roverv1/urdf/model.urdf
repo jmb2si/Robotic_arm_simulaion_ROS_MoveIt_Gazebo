@@ -1,0 +1,526 @@
+<?xml version="1.0" ?>
+<robot name="roverv1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+  <!-- PROPERTY LIST -->
+  <!--All units in m-kg-s-radians unit system -->
+  <property name="Motoreffort" value="30" />
+  <property name="Servoeffort" value="15" />
+  <property name="Motorvelocity" value="3" />
+  <property name="Servovelocity" value="0.2" />
+
+
+
+ <link name="body_footprint"/>
+
+<gazebo reference="body_footprint">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <!--joint name="floating" type="floating">
+    <origin rpy="0 0 0" xyz="0 0 0.3"/>
+    <parent link="world"/>
+    <child link="anker"/>
+  </joint-->
+
+  <joint name="fixed" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.3"/>
+    <parent link="body_footprint"/>
+    <child link="body"/>
+  </joint>
+
+<link name="body">
+     <inertial>
+      <mass value="5"/>
+      <origin rpy="0  0  0" xyz="0 0 0.125"/>
+      <inertia ixx="0.02050030" ixy="0" ixz="0" iyy="0.05700340" iyz="0" izz="0.05769180"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/base.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/base.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<link name="Right_Rocker">
+     <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0  0  0" xyz="-0.10 0.11 0"/>
+      <inertia ixx="0.00335" ixy="0" ixz="0" iyy="0.0224" iyz="0" izz="0.02345"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/LLArm.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/LLArm.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Right_Rocker_joint" type="revolute">
+    <parent link="body"/>
+    <child link="Right_Rocker"/>
+    <origin rpy="0 0 0" xyz="0 0.136 0.03"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10" lower="-0.7853" upper="0.7853" velocity="20"/>
+    <dynamics damping="1" friction="1"/>
+  </joint>
+
+<link name="Left_Rocker">
+     <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0  0  0" xyz="-0.10 -0.11 0"/>
+      <inertia ixx="0.00335" ixy="0" ixz="0" iyy="0.0224" iyz="0" izz="0.02345"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/RLArm.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/RLArm.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Left_Rocker_joint" type="revolute">
+    <parent link="body"/>
+    <child link="Left_Rocker"/>
+    <origin rpy="0 0 0" xyz="0 -0.136 0.03"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10" lower="-0.7853" upper="0.7853" velocity="20"/>
+    <dynamics damping="1" friction="1"/>
+  </joint>
+
+<link name="Right_Bogie">
+     <inertial>
+      <mass value="0.6"/>
+      <origin rpy="0  0  0" xyz="0 0.1 0"/>
+      <inertia ixx="0.00457331" ixy="0" ixz="0" iyy="0.02697040" iyz="0" izz="0.02375490"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/LSArm.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/LSArm.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Right_Bogie_joint" type="revolute">
+    <parent link="Right_Rocker"/>
+    <child link="Right_Bogie"/>
+    <origin rpy="0 0 0" xyz="0.2 0.054 -0.06"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1" lower="-0.7853" upper="0.7853" velocity="20"/>
+    <dynamics damping="1" friction="1"/>
+  </joint>
+
+<link name="Left_Bogie">
+     <inertial>
+      <mass value="0.6"/>
+      <origin rpy="0  0  0" xyz="0 -0.1 0"/>
+      <inertia ixx="0.00457331" ixy="0" ixz="0" iyy="0.02697040" iyz="0" izz="0.02375490"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/RSArm.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/RSArm.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Left_Bogie_joint" type="revolute">
+    <parent link="Left_Rocker"/>
+    <child link="Left_Bogie"/>
+    <origin rpy="0 0 0" xyz="0.2 -0.054 -0.06"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1" lower="-0.7853" upper="0.7853" velocity="20"/>
+    <dynamics damping="1" friction="1"/>
+  </joint>
+
+
+
+
+<link name="Servo4">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 -0.07 -0.08"/>
+      <inertia ixx="0.00160383" ixy="0" ixz="0" iyy="0.00114480" iyz="0" izz="0.00053229"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Servo4_joint" type="revolute">
+    <parent link="Right_Bogie"/>
+    <child link="Servo4"/>
+    <origin rpy="0 0 0" xyz="0.2 0.165 0.03"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${Servoeffort}" lower="-1.5708" upper="1.5708" velocity="${Servovelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel6">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor6_joint" type="continuous">
+    <parent link="Servo4"/>
+    <child link="Wheel6"/>
+    <origin rpy="0 0 0" xyz="0 -0.03 -0.142"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+<link name="Servo3">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 -0.07 -0.08"/>
+      <inertia ixx="0.00160383" ixy="0" ixz="0" iyy="0.00114480" iyz="0" izz="0.00053229"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Servo3_joint" type="revolute">
+    <parent link="Left_Bogie"/>
+    <child link="Servo3"/>
+    <origin rpy="0 0 3.14159" xyz="0.2 -0.165 0.03"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${Servoeffort}" lower="-1.5708" upper="1.5708" velocity="${Servovelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel5">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor5_joint" type="continuous">
+    <parent link="Servo3"/>
+    <child link="Wheel5"/>
+    <origin rpy="0 0 0" xyz="0 -0.03 -0.142"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel4">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor4_joint" type="continuous">
+    <parent link="Right_Bogie"/>
+    <child link="Wheel4"/>
+    <origin rpy="0 0 0" xyz="-0.200 0.130 -0.110"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel3">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor3_joint" type="continuous">
+    <parent link="Left_Bogie"/>
+    <child link="Wheel3"/>
+    <origin rpy="0 0 3.14159" xyz="-0.200 -0.130 -0.110"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Servo2">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 -0.07 -0.08"/>
+      <inertia ixx="0.00160383" ixy="0" ixz="0" iyy="0.00114480" iyz="0" izz="0.00053229"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Servo2_joint" type="revolute">
+    <parent link="Right_Rocker"/>
+    <child link="Servo2"/>
+    <origin rpy="0 0 0" xyz="-0.400 0.214 -0.04"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${Servoeffort}" lower="-1.5708" upper="1.5708" velocity="${Servovelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel2">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor2_joint" type="continuous">
+    <parent link="Servo2"/>
+    <child link="Wheel2"/>
+    <origin rpy="0 0 0" xyz="0 -0.035 -0.140"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Servo1">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 -0.07 -0.08"/>
+      <inertia ixx="0.00160383" ixy="0" ixz="0" iyy="0.00114480" iyz="0" izz="0.00053229"/>
+    </inertial>
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/StWh1.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Servo1_joint" type="revolute">
+    <parent link="Left_Rocker"/>
+    <child link="Servo1"/>
+    <origin rpy="0 0 3.14159" xyz="-0.400 -0.214 -0.04"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${Servoeffort}" lower="-1.5708" upper="1.5708" velocity="${Servovelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+<link name="Wheel1">
+     <inertial>
+      <mass value="0.4"/>
+      <origin rpy="0  0  0" xyz="0 0.04 0"/>
+      <inertia ixx="0.000696" ixy="0" ixz="0" iyy="0.001044" iyz="0" izz="0.000696"/>
+    </inertial>
+
+    <collision>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roverv1/meshes/Wheel.STL" scale="1 1 1"/>
+      </geometry>
+	
+    </visual>
+  </link>
+
+<joint name="Motor1_joint" type="continuous">
+    <parent link="Servo1"/>
+    <child link="Wheel1"/>
+    <origin rpy="0 0 0" xyz="0 -0.035 -0.140"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${Motoreffort}" velocity="${Motorvelocity}"/>
+    <dynamics damping="1" friction="5"/>
+  </joint>
+
+
+
+
+
+</robot>

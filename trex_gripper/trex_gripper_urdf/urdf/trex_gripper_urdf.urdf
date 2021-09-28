@@ -33,7 +33,7 @@
   <joint name="virtual_joint" type="fixed">
     <parent link="world"/>
     <child link="link_1"/>
-    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
     <dynamics damping="100" friction="100.0"/>
     <!-- please check the damping and friction values -->
   </joint>
