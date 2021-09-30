@@ -105,10 +105,10 @@ add_message_files(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES roverv1
+  INCLUDE_DIRS include
+  LIBRARIES roverv1
   CATKIN_DEPENDS message_runtime
-#  DEPENDS system_lib
+  DEPENDS system_lib
 )
 
 ###########

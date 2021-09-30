@@ -5,7 +5,9 @@
 
   <arg name="paused" default="false"/>
   <arg name="gui" default="true"/>
-  <arg name="urdf_path" default="$(find roverv1)/urdf/modell.urdf"/>
+ <!--  <arg name="urdf_path" default="$(find roverv1)/urdf/modell.urdf"/> -->
+
+  <arg name="urdf_path" default="$(find roverv1)/urdf/mrcp_trex_moving.urdf"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="headless" default="false"/>  
   <arg name="debug" default="false" />
@@ -39,7 +41,7 @@
 
   <!--  If it is in the roslaunch file, it is globally effective. The above code can also be placed in the node, such as -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="use_gui" value="true"/>
+      <param name="use_gui" value="true"/>
   </node>
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"

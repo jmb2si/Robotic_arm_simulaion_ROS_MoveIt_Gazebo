@@ -1,76 +1,44 @@
-roverv1:
-  # Publish all joint states -----------------------------------
-  joint_state_controller:
-    type: joint_state_controller/JointStateController
-    publish_rate: 50  
-  
-  # Position Controllers ---------------------------------------
-  Right_Rocker_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Right_Rocker_joint'
-    pid: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
 
-  Left_Rocker_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Left_Rocker_joint'
-    pid: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50  
 
-  Right_Bogie_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Right_Bogie_joint'
-    pid: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+robot_base_velocity_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  left_wheel: ['Motor1_joint', 'Motor3_joint', 'Motor5_joint']
+  right_wheel: ['Motor2_joint', 'Motor4_joint', 'Motor6_joint']
 
-  Left_Bogie_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Left_Bogie_joint'
-    pid: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+  publish_rate: 50
+  pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  cmd_vel_timeout: 0.5
+  wheel_separation : 0.445208
+  wheel_radius : 0.0625
+  base_frame_id: body
+  odom_frame_id: odom
+  enable_odom_tf: true
+  estimate_velocity_from_position: false
+  wheel_separation_multiplier: 1.0 
+  wheel_radius_multiplier    : 1.0 
+  linear:
+    x:
+      has_velocity_limits    : true
+      max_velocity           : 2.0   
+      has_acceleration_limits: true
+      max_acceleration       : 3.0   
+  angular:
+    z:
+      has_velocity_limits    : true
+      max_velocity           : 3.0   
+      has_acceleration_limits: true
+      max_acceleration       : 6.0   
 
-  Servo1_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Servo1_joint'
-    pid: {p: 20000.0, i: 0, d: 0, i_clamp: 0.0, antiwindup: true}
-
-  Servo2_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Servo2_joint'
-    pid: {p: 20000.0, i: 0, d: 0, i_clamp: 0.0, antiwindup: true}
-
-  Servo3_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Servo3_joint'
-    pid: {p: 20000.0, i: 0, d: 0, i_clamp: 0.0, antiwindup: true}
-
-  Servo4_position_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: 'Servo4_joint'
-    pid: {p: 20000.0, i: 0.0, d: 0, i_clamp: 0.0, antiwindup: true}
-
-  Motor1_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor1_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
-
-  Motor2_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor2_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
-
-  Motor3_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor3_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
-
-  Motor4_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor4_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
-
-  Motor5_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor5_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
-
-  Motor6_velocity_controller:
-    type: "effort_controllers/JointVelocityController"
-    joint: 'Motor6_joint'
-    pid: {p: 1, i: 20, d: 0, i_clamp: 100, antiwindup: true}
+/gazebo_ros_control:
+  pid_gains:
+    Motor1_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}
+    Motor2_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}
+    Motor3_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}
+    Motor4_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}
+    Motor5_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}
+    Motor6_joint: {p: 20.0, i: 0.01, d: 0.01, i_clamp: 0.0}

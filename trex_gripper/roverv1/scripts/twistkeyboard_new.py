@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-
 from __future__ import print_function
-import roslib; roslib.load_manifest('teleop_twist_keyboard')
-import rospy
-import math
-from std_msgs.msg import Float64
-import sys, select, termios, tty
+import tty
+import termios
+import select
 from roverv1.msg import rover_mvmt
-
+import sys
+from std_msgs.msg import Float64
+import math
+import rospy
+import roslib
+roslib.load_manifest('teleop_twist_keyboard')
 
 msg = """
 Reading from the keyboard  and Publishing to roverv1/control!
@@ -61,6 +63,7 @@ if __name__=="__main__":
 	speed = 0
 	turn = 0
 	message = rover_mvmt()
+
 	try:
 		print(msg)
 		message.mode = 'n'
@@ -119,12 +122,8 @@ if __name__=="__main__":
 				if (key == '\x03'):
 					break
 			pub.publish(message)
+#end 
 
-# end 
+	except Exception as e:print(e)
 
-	except Exception as e:
-		print(e)
-
-	finally:
-
-    		termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+	finally:termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

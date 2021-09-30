@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(mrcp_terx_gripper_description)
+project(mrcp_trex_gripper_description)
 
 
 find_package(catkin REQUIRED)
